@@ -6703,7 +6703,7 @@ export const countryCodes: CountryItem[] = [
             "ro": "Elveţia",
             "bg": "Швейцария",
             "de": "Schweiz",
-            "fr": "la Suisse",
+            "fr": "Suisse",
             "nl": "Zwitserland",
             "it": "Svizzera",
             "cn": "瑞士",
