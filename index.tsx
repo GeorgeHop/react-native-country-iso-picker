@@ -11,7 +11,8 @@ import {
     Keyboard,
     ViewStyle,
     Modal,
-    TextStyle
+    TextStyle,
+    TouchableOpacity
 } from 'react-native';
 import { CountryItem, ItemTemplateProps, Style, ListHeaderComponentProps } from "./types/Types";
 import { useKeyboardStatus } from "./helpers/useKeyboardStatus";
@@ -55,12 +56,14 @@ interface Props {
     show: boolean,
     enableModalAvoiding?: boolean,
     disableBackdrop?: boolean,
+    closeButton?: boolean,
 
     onBackdropPress?: (...args: any) => any,
     pickerButtonOnPress: (item: CountryItem) => any,
     itemTemplate?: (props: ItemTemplateProps) => JSX.Element,
     ListHeaderComponent?: (props: ListHeaderComponentProps) => JSX.Element,
     onRequestClose?: (...args: any) => any,
+    closeModal?: (...args: any) => any,
 
     lang: string,
     inputPlaceholder?: string,
@@ -89,6 +92,8 @@ export const CountryPicker = ({
     showOnly,
     ListHeaderComponent,
     itemTemplate: ItemTemplate = CountryButton,
+    closeModal: closeCountryPicker,
+    showCloseButton,
     ...rest
 }: Props) => {
     // ToDo refactor exclude and showOnly props to objects
@@ -207,6 +212,7 @@ export const CountryPicker = ({
                 onPress={() => {
                     Keyboard.dismiss();
                     typeof pickerButtonOnPress === 'function' && pickerButtonOnPress(item);
+                    typeof closeCountryPicker === 'function' && closeCountryPicker()
                 }}
             />
         );
@@ -261,6 +267,14 @@ export const CountryPicker = ({
                         },
                     ]}
                 >
+                    {showCloseButton === false ? null :
+                        <TouchableOpacity
+                            style={[styles.closeButton, style?.closeButton]}
+                            onPress={()=> closeCountryPicker ? closeCountryPicker() : null}
+                        >
+                            <Text style={[styles.closeButtonText, style?.closeButtonText]}>&times;</Text>
+                        </TouchableOpacity>
+                    }
                     <View
                         style={{
                             flexDirection: 'row',
@@ -310,6 +324,7 @@ export const CountryPicker = ({
                                     onPress={(item: CountryItem) => {
                                         Keyboard.dismiss();
                                         typeof pickerButtonOnPress === 'function' && pickerButtonOnPress(item);
+                                        typeof closeCountryPicker === 'function' && closeCountryPicker()
                                     }}
                                 />
                                 : null
@@ -437,7 +452,7 @@ export const CountryList = ({
 };
 
 
-type StyleKeys = 'container' | 'modal' | 'modalInner' | 'searchBar' | 'countryMessage' | 'line';
+type StyleKeys = 'container' | 'modal' | 'modalInner' | 'searchBar' | 'countryMessage' | 'line' | 'closeButton' | 'closeButtonText';
 
 const styles: { [key in StyleKeys]: ViewStyle } = {
     container: {
@@ -494,4 +509,29 @@ const styles: { [key in StyleKeys]: ViewStyle } = {
         alignSelf: 'center',
         marginVertical: 5,
     },
+    closeButton: {
+        backgroundColor: '#ee6e73',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        width: 60,
+        height: 60,
+        borderRadius: 100,
+        position: 'absolute',
+        bottom: 10,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItem: 'center',
+        zIndex: 999
+    },
+    closeButtonText:{
+        textAlign: 'center',
+        color: '#0A0A0A',
+        fontSize: 32
+    }
 };

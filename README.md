@@ -60,10 +60,10 @@ export default function App() {
       // For showing picker just put show state to show prop
       <CountryPicker
         show={show}
+        closeModal={() => setShow(false)}
         // when picker button press you will get the country object with dial code
         pickerButtonOnPress={(item) => {
           setCountryCode(item.dial_code);
-          setShow(false);
         }}
       />
     </View>
@@ -120,10 +120,10 @@ export default function App() {
       // For showing picker just put show state to show prop
       <CountryPicker
         show={show}
+        closeModal={() => setShow(false)}
         // when picker button press you will get the country object with dial code
         pickerButtonOnPress={(item) => {
           setCountryCode(item.dial_code);
-          setShow(false);
         }}
         ListHeaderComponent={ListHeaderComponent}
         popularCountries={['en', 'ua', 'pl']}
@@ -178,6 +178,7 @@ Below are the props you can pass to the React Component.
 | Prop                       | Type      | Default | Example                                    | Description                                                                                                                                                               |
 | -------------------------- | --------- | ------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | show                       | boolean   |         |                                            | This prop using for displaying the modal. Put your show state here.                                                                                                       |
+| closeModal        | function  |         | closeModal={() => setShow(false)} | Function used to close the modal. |
 | pickerButtonOnPress        | function  |         | (country) => setCode(country.dial_code)    | Put your function/functions here for getting country data from picker.                                                                                                    |
 | inputPlaceholder           | string    |         | inputPlaceholder={'Your placeholder'}      | If you need a custom placeholder for your input you may need this prop.                                                                                                   |
 | searchMessage              | string    |         | searchMessage={'Some search message here'} | If you want to customize search message just use this prop.                                                                                                               |
@@ -193,6 +194,7 @@ Below are the props you can pass to the React Component.
 | showOnly  | array    |         | showOnly={['UA', 'EN']}  | This prop allow you to configure which countries you want to show. |
 | popularCountries  | array    |         | popularCountries={['UA', 'EN']}  | This prop allow you to send popular countries array to your ListHeaderComponent. |
 | ListHeaderComponent  | JSX.Element    |         | ListHeaderComponent={ListHeaderComponent}  | This prop allow you to create header component to show popular countries on top of list! Check example section with ListHeaderComponent  |
+| showCloseButton | boolean  | true | buttonCloseModal={true} | show or not show the close button when the modal is open |
 
 :grey_exclamation: Also you can use all other FlatList and TextInput props if you need. :grey_exclamation:
 
@@ -201,6 +203,7 @@ Below are the props you can pass to the React Component.
 ```JS
 <CountryPicker
     show={show}
+    closeModal={() => setShow(false)}
     lang={'cz'}
     style={{
         // Styles for whole modal [View]
@@ -252,7 +255,6 @@ Below are the props you can pass to the React Component.
     }}
     pickerButtonOnPress={(item) => {
         setCountryCode(item.dial_code);
-        setShow(false);
     }}
 />
 ```

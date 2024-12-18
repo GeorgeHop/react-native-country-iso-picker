@@ -32,5 +32,7 @@ export interface Style {
     countryButtonStyles?: ViewStyle,
     flag?: TextStyle,
     dialCode?: TextStyle,
-    countryName?: TextStyle
+    countryName?: TextStyle,
+    closeButton?: ViewStyle,
+    closeButtonText?: TextStyle
 }
